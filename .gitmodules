@@ -1,0 +1,3 @@
+[submodule "LibMTL"]
+	path = LibMTL
+	url = https://github.com/TanSento/LibMTL
