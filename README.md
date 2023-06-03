@@ -1,7 +1,7 @@
 # BLEVE-libMTL
 
 ``BLEVE-LibMTL`` is an adaptation of LibMTL to perform predictions on Boiling Liquid and Expanding Vapour Explosion (BLEVE).
-``LibMTL`` is an open-source library built on [PyTorch](https://pytorch.org/) for Multi-Task Learning (MTL). See the [latest documentation](https://libmtl.readthedocs.io/en/latest/) for detailed introductions and API instructions. The authors' source codes are located in is https://github.com/median-research-group/LibMTL.
+``LibMTL`` is an open-source library built on [PyTorch](https://pytorch.org/) for Multi-Task Learning (MTL). See the [latest documentation](https://libmtl.readthedocs.io/en/latest/) for detailed introductions and API instructions. The authors' source codes are located in https://github.com/median-research-group/LibMTL.
 
 # BLEVE problems
 
