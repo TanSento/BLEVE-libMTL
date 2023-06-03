@@ -18,3 +18,4 @@
    conda activate libmtl
    pip install torch==1.9.1 torchvision==0.9.0 numpy==1.20
    ```
+
