@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-# import seaborn as sns
+import seaborn as sns
 import numpy as np
 import timeit
 from sklearn.metrics import r2_score, mean_absolute_percentage_error, mean_squared_error
