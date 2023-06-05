@@ -206,7 +206,7 @@ class BLEVEDataset(Dataset):
     
     
     def __getitem__(self, idx):                 # targets[0].reshape(1) or not does not matter
-        inputs = self.get_batch_input(idx)      # in fact, do not reshape here increases the running time, even though we need to reshape the gt in metrics.py
+        inputs = self.get_batch_input(idx)      # in fact, do not reshape here improves the running time, even though we need to reshape the gt in metrics.py
         targets = self.get_batch_targets(idx)
         targets_dict = {'posi_peaktime': targets[0], 
                         'nega_peaktime': targets[1], 
