@@ -29,19 +29,26 @@ def parse_args(parser):
     parser.add_argument('--aug', action='store_true', default=False, help='data augmentation')         
     parser.add_argument('--train_mode', default='trainval', type=str, help='trainval, train')
     parser.add_argument('--name', default='posi_impulse', type=str, help='name of the task, options: posi_peaktime, nega_peaktime, arri_time, posi_dur, nega_dur, posi_pressure, nega_pressure, posi_impulse')
-
+    parser.add_argument('--large_data', default=False, action='store_true',
+                        help='whether to use large data, True or False. If False, do not declare in command line arguments, else declare')
+    parser.add_argument('--testing_size', type = int, default=7200, help='Size of testing data')
     return parser.parse_args()
 
 def main(params):
     print(params)
-    X_train_torch, X_test_torch, target_train, target_test, quantile = get_data(mode='single', task_name=params.name)
+    X_train_torch, X_test_torch, target_train, target_test, quantile = get_data(mode='single', task_name=params.name, large=params.large_data)
 
+    X_test_torch = X_test_torch[:params.testing_size]
+    target_test = target_test[:params.testing_size]
+    
     data_train = BLEVEDatasetSingle(X_train_torch, target_train, task_name = params.name)
     data_test = BLEVEDatasetSingle(X_test_torch, target_test, task_name = params.name)
 
 
-    train_loader = DataLoader(data_train, batch_size=512, shuffle=True)  
-    test_loader = DataLoader(data_test, batch_size=7200, shuffle=False) # PyTorch Dataloader knows how to concatenate to load labels in parallel, 
+    train_loader = DataLoader(data_train, batch_size=512, shuffle=True)
+
+    print('length of X_test_torch:', len(X_test_torch))
+    test_loader = DataLoader(data_test, batch_size=len(X_test_torch), shuffle=False) # PyTorch Dataloader knows how to concatenate to load labels in parallel, 
                                                                       # even as a dict, as long as our batch have indexing
 
 

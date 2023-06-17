@@ -33,15 +33,15 @@ def parse_args(parser):
 
 def main(params):
     print(params)
-    X_train_torch, X_test_torch, target_train, target_test, quantiles = get_data(mode = 'multitask')
+    X_train_torch, X_test_torch, target_train, target_test, quantiles = get_data(mode = 'multitask', large=False)
 
-    data_train = BLEVEDataset(X_train_torch, target_train)
-    data_test = BLEVEDataset(X_test_torch, target_test)
+    data_train = BLEVEDataset(X_train_torch, target_train, sev_tar=False)
+    data_test = BLEVEDataset(X_test_torch, target_test, sev_tar=False)
 
 
     train_loader = DataLoader(data_train, batch_size=512, shuffle=True)  
     test_loader = DataLoader(data_test, batch_size=7200, shuffle=False) # PyTorch Dataloader knows how to concatenate to load labels in parallel, 
-                                                                    # even as a dict, as long as our batch have indexing
+                                                                        # even as a dict, as long as our batch have indexing
 
 
        

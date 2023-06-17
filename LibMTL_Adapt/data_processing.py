@@ -13,28 +13,37 @@ from torch.utils.data import DataLoader, Dataset, TensorDataset
 
 
 
-def get_data(mode, task_name=None):
+def get_data(mode, task_name=None, large=False):
 
     # Read-in Data
-    df1 = pd.read_excel("data_new/train.xlsx", sheet_name="positive_peak_time")
-    df2 = pd.read_excel("data_new/train.xlsx", sheet_name="negative_peak_time")
-    df3 = pd.read_excel("data_new/train.xlsx", sheet_name="arrival_time")
-    df4 = pd.read_excel("data_new/train.xlsx", sheet_name="positive_duration")
-    df5 = pd.read_excel("data_new/train.xlsx", sheet_name="negative_duration")
-    df6 = pd.read_excel("data_new/train.xlsx", sheet_name="positive_pressure")
-    df7 = pd.read_excel("data_new/train.xlsx", sheet_name="negative_pressure")
-    df8 = pd.read_excel("data_new/train.xlsx", sheet_name="positive_impulse")
+    df1 = pd.read_csv('data_new/train/positive_peak_time.csv')
+    df2 = pd.read_csv('data_new/train/negative_peak_time.csv')
+    df3 = pd.read_csv('data_new/train/arrival_time.csv')
+    df4 = pd.read_csv('data_new/train/positive_duration.csv')
+    df5 = pd.read_csv('data_new/train/negative_duration.csv')
+    df6 = pd.read_csv('data_new/train/positive_pressure.csv')
+    df7 = pd.read_csv('data_new/train/negative_pressure.csv')
+    df8 = pd.read_csv('data_new/train/positive_impulse.csv')
 
 
-
-    dt1 = pd.read_excel("data_new/test.xlsx", sheet_name="positive_peak_time")
-    dt2 = pd.read_excel("data_new/test.xlsx", sheet_name="negative_peak_time")
-    dt3 = pd.read_excel("data_new/test.xlsx", sheet_name="arrival_time")
-    dt4 = pd.read_excel("data_new/test.xlsx", sheet_name="positive_duration")
-    dt5 = pd.read_excel("data_new/test.xlsx", sheet_name="negative_duration")
-    dt6 = pd.read_excel("data_new/test.xlsx", sheet_name="positive_pressure")
-    dt7 = pd.read_excel("data_new/test.xlsx", sheet_name="negative_pressure")
-    dt8 = pd.read_excel("data_new/test.xlsx", sheet_name="positive_impulse")
+    if not large:
+        dt1 = pd.read_csv('data_new/test/positive_peak_time_test.csv')
+        dt2 = pd.read_csv('data_new/test/negative_peak_time_test.csv')
+        dt3 = pd.read_csv('data_new/test/arrival_time_test.csv')
+        dt4 = pd.read_csv('data_new/test/positive_duration_test.csv')
+        dt5 = pd.read_csv('data_new/test/negative_duration_test.csv')
+        dt6 = pd.read_csv('data_new/test/positive_pressure_test.csv')
+        dt7 = pd.read_csv('data_new/test/negative_pressure_test.csv')
+        dt8 = pd.read_csv('data_new/test/positive_impulse_test.csv')
+    else:
+        dt1 = pd.read_csv('data_new/large/positive_peak_time_valid.csv')
+        dt2 = pd.read_csv('data_new/large/negative_peak_time_valid.csv')
+        dt3 = pd.read_csv('data_new/large/arrival_time_valid.csv')
+        dt4 = pd.read_csv('data_new/large/positive_duration_valid.csv')
+        dt5 = pd.read_csv('data_new/large/negative_duration_valid.csv')
+        dt6 = pd.read_csv('data_new/large/positive_pressure_valid.csv')
+        dt7 = pd.read_csv('data_new/large/negative_pressure_valid.csv')
+        dt8 = pd.read_csv('data_new/large/positive_impulse_valid.csv')
 
     
     # Drop 'Status' Column, any df will work
@@ -154,21 +163,24 @@ def get_data(mode, task_name=None):
         return X_train_torch, X_test_torch, target_train, target_test, quantiles
     elif mode == 'single':
         if task_name == 'posi_peaktime':
-            return X_train_torch, X_test_torch, y1_train_torch.reshape(21600), y1_test_torch.reshape(7200), quantile1
+            return X_train_torch, X_test_torch, y1_train_torch.reshape(len(df1)), y1_test_torch.reshape(len(dt1)), quantile1
         elif task_name == 'nega_peaktime':
-            return X_train_torch, X_test_torch, y2_train_torch.reshape(21600), y2_test_torch.reshape(7200), quantile2
+            return X_train_torch, X_test_torch, y2_train_torch.reshape(len(df1)), y2_test_torch.reshape(len(dt1)), quantile2
         elif task_name == 'arri_time':
-            return X_train_torch, X_test_torch, y3_train_torch.reshape(21600), y3_test_torch.reshape(7200), quantile3
+            return X_train_torch, X_test_torch, y3_train_torch.reshape(len(df1)), y3_test_torch.reshape(len(dt1)), quantile3
         elif task_name == 'posi_dur':
-            return X_train_torch, X_test_torch, y4_train_torch.reshape(21600), y4_test_torch.reshape(7200), quantile4
+            return X_train_torch, X_test_torch, y4_train_torch.reshape(len(df1)), y4_test_torch.reshape(len(dt1)), quantile4
         elif task_name == 'nega_dur':
-            return X_train_torch, X_test_torch, y5_train_torch.reshape(21600), y5_test_torch.reshape(7200), quantile5
+            return X_train_torch, X_test_torch, y5_train_torch.reshape(len(df1)), y5_test_torch.reshape(len(dt1)), quantile5
         elif task_name == 'posi_pressure':
-            return X_train_torch, X_test_torch, y6_train_torch.reshape(21600), y6_test_torch.reshape(7200), quantile6
+            return X_train_torch, X_test_torch, y6_train_torch.reshape(len(df1)), y6_test_torch.reshape(len(dt1)), quantile6
         elif task_name == 'nega_pressure':
-            return X_train_torch, X_test_torch, y7_train_torch.reshape(21600), y7_test_torch.reshape(7200), quantile7
+            return X_train_torch, X_test_torch, y7_train_torch.reshape(len(df1)), y7_test_torch.reshape(len(dt1)), quantile7
         else:
-            return X_train_torch, X_test_torch, y8_train_torch.reshape(21600), y8_test_torch.reshape(7200), quantile8
+            return X_train_torch, X_test_torch, y8_train_torch.reshape(len(df1)), y8_test_torch.reshape(len(dt1)), quantile8
+        
+        # all df have the same length = 21600
+        # all dt have the same length = 7200 if small, = 720000 if large
         
         
 
@@ -178,12 +190,13 @@ def get_data(mode, task_name=None):
 
 class BLEVEDataset(Dataset):
 
-    def __init__(self, data, target):
+    def __init__(self, data, target, sev_tar = False):
         self.data = data
         self.targets = target
         # self.target1 = target[:,0]
         # self.target2 = target[:,1]
         # ...
+        self.sevTar = sev_tar
 
             
     def __len__(self):
@@ -208,14 +221,23 @@ class BLEVEDataset(Dataset):
     def __getitem__(self, idx):                 # targets[0].reshape(1) or not does not matter
         inputs = self.get_batch_input(idx)      # in fact, do not reshape here improves the running time, even though we need to reshape the gt in metrics.py
         targets = self.get_batch_targets(idx)
-        targets_dict = {'posi_peaktime': targets[0], 
-                        'nega_peaktime': targets[1], 
-                        'arri_time': targets[2], 
-                        'posi_dur': targets[3], 
-                        'nega_dur': targets[4], 
-                        'posi_pressure': targets[5], 
-                        'nega_pressure': targets[6], 
-                        'posi_impulse': targets[7]}
+        if not self.sevTar:
+            targets_dict = {'posi_peaktime': targets[0], 
+                            'nega_peaktime': targets[1], 
+                            'arri_time': targets[2], 
+                            'posi_dur': targets[3], 
+                            'nega_dur': targets[4], 
+                            'posi_pressure': targets[5], 
+                            'nega_pressure': targets[6], 
+                            'posi_impulse': targets[7]}
+        else:
+            targets_dict = {'posi_peaktime': targets[0], 
+                            'nega_peaktime': targets[1], 
+                            'arri_time': targets[2], 
+                            'posi_dur': targets[3], 
+                            'nega_dur': targets[4], 
+                            'posi_pressure': targets[5], 
+                            'nega_pressure': targets[6]}
         
         return inputs, targets_dict
 
