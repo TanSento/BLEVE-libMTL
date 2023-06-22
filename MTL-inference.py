@@ -28,7 +28,7 @@ from LibMTL.utils import set_random_seed, set_device
 def parse_args(parser):
     parser.add_argument('--aug', action='store_true', default=False, help='data augmentation')         
     parser.add_argument('--train_mode', default='trainval', type=str, help='trainval, train')
-    parser.add_argument('--name', default='Multitask', type=str, help='name of the task')
+    parser.add_argument('--name', default='Multitask', type=str, help='name of the task, weighting methods and hyper-parameters. Hint: they are stored in the folder LibMTL_StateDict')
     parser.add_argument('--large_data', default=False, action='store_true',
                         help='whether to use large data, True or False. If False, do not declare in command line arguments, else declare')
     parser.add_argument('--testing_size', type = int, default=7200, help='Size of testing data')

@@ -28,7 +28,7 @@ from LibMTL.utils import set_random_seed, set_device
 def parse_args(parser):
     parser.add_argument('--aug', action='store_true', default=False, help='data augmentation')         
     parser.add_argument('--train_mode', default='trainval', type=str, help='trainval, train')
-    parser.add_argument('--name', default='Multitask', type=str, help='name of the task and hyper-parameters')
+    parser.add_argument('--name', default='Multitask', type=str, help='name of the task, weighting methods and hyper-parameters. Note that this name will also be used to save the model state dict')
     return parser.parse_args()
 
 def main(params):
